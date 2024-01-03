@@ -1,0 +1,28 @@
+1- Pull postgres dockerhub image: docker pull postgres:15-alpine
+2- make our go app server module
+    - bash : mkdir server && cd server && go mod init server
+    - powerShell :  New-Item -ItemType Directory -Force -Path server
+                    Set-Location -Path server
+                    go mod init server
+3- Run postgres database
+    - docker run --name postgresChat -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=password -d postgres:15-alpine
+
+    or for security, pass env in a file
+
+    - docker run --name postgresChat -p 5432:5432 --env-file ./postgres.env -d postgres:15-alpine
+4- Create our Database
+    - docker exec -it postgresChat createdb --username=root --owner=root go-chat
+5- Access Out postgresChat DB
+    - docker exec -it postgresChat psql
+6- To make sure database is created type "\l" to list the databases, Then exit with "\q"
+7- Write db package
+    - Import postgres driver "github.com/lib/pq", You can use "go get" command or "go mod tidy".
+8- Create main package in cmd folder.
+9- download golang-migrate we will use it as a CLI tool to manage our database.
+10- Create migrations folder in db folder.
+11- Create a migration for adding users table using migrate tool
+    - migrate create -ext sql -dir db/migrations add_users_table
+12- Apply the migrations
+    - migrate -path db/migrations -database "postgresql://root:password@localhost:5432/go-chat?sslmode=disable" -verbose up
+    - connect to postgres database engine then connect to our "go-chat" db using "\c go=chat", list tables using "\d", make sure "users" database is present.
+13- 
