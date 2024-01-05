@@ -16,10 +16,14 @@ import (
 )
 
 type Database struct {
-	db *sql.DB
+	// DB is a database handle representing a pool of zero or more underlying connections. It's safe for concurrent use by multiple goroutines.
+	db *sql.DB //type DB struct
 }
 
+// a pointer is a variable that stores the memory address of another variable.
+// Thats why we return &Database as its a memory value.
 func NewDatabase() (*Database, error) {
+	// func Open(driverName, dataSourceName string) (*DB, error)
 	db, err := sql.Open("postgres", "postgresql://root:password@localhost:5432/go-chat?sslmode=disable")
 	if err != nil {
 		return nil, err

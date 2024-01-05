@@ -25,4 +25,10 @@
 12- Apply the migrations
     - migrate -path db/migrations -database "postgresql://root:password@localhost:5432/go-chat?sslmode=disable" -verbose up
     - connect to postgres database engine then connect to our "go-chat" db using "\c go=chat", list tables using "\d", make sure "users" database is present.
-13- 
+
+
+
+
+KeyPoints:
+1- Package context defines the Context type, which carries deadlines, cancellation signals, and other request-scoped values across API boundaries and between processes.
+2- 
