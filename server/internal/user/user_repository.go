@@ -46,6 +46,7 @@ func NewRepository(db DBTX) Repository {
 func (r *repository) CreateUser(ctx context.Context, user *User) (*User, error) {
 	var lastInsertId int
 	query := "INSERT INTO users(username, password, email) VALUES ($1, $2, $3) returning id"
+	// func (db *DB) QueryRowContext(ctx context.Context, query string, args ...any) *Row
 	err := r.db.QueryRowContext(ctx, query, user.Username, user.Password, user.Email).Scan(&lastInsertId) //Rows.Scan
 	// func (r *Row) Scan(dest ...any) error >>> Scan copies the columns from the matched row into the values pointed at by dest.
 	if err != nil {

@@ -13,7 +13,7 @@ type Hub struct {
 	Broadcast  chan *Message
 }
 
-func NewHub() *Hub {
+func NewHub() *Hub { //  constructor
 	return &Hub{
 		Rooms:      make(map[string]*Room),
 		Register:   make(chan *Client),
