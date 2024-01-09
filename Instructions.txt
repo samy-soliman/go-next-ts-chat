@@ -26,6 +26,18 @@
     - migrate -path db/migrations -database "postgresql://root:password@localhost:5432/go-chat?sslmode=disable" -verbose up
     - connect to postgres database engine then connect to our "go-chat" db using "\c go=chat", list tables using "\d", make sure "users" database is present.
 
+..- Init TypeScript project and tailwindcss 
+    - npx create-next-app@13.1.1 client --typescript --eslint
+    - npm install -D tailwindcss postcss autoprefixer
+    - npx tailwindcss init -p
+..- Remove next/font warning
+    - npx @next/codemod built-in-next-font .
+..- Add uuid package
+    - npm i uuid
+    - remove hint error > npm i --save-dev @types/uuid
+..- Add autosize package
+    - npm i autosize
+    - Remove hint error > npm i --save-dev @types/autosize
 
 
 
