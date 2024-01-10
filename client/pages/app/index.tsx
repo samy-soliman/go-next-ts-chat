@@ -14,7 +14,7 @@ export type Message = {
   type: 'recv' | 'self'
 }
 
-const index = () => {
+const Index = () => {
   const [messages, setMessage] = useState<Array<Message>>([])
   const textarea = useRef<HTMLTextAreaElement>(null)
   const { conn } = useContext(WebsocketContext)
@@ -120,4 +120,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

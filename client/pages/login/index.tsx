@@ -3,7 +3,7 @@ import { API_URL } from '../../constants'
 import { useRouter } from 'next/router'
 import { AuthContext, UserInfo } from '../../modules/auth_provider'
 
-const index = () => {
+const Index = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { authenticated } = useContext(AuthContext)
@@ -89,4 +89,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

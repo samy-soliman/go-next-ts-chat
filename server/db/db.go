@@ -24,6 +24,7 @@ type Database struct {
 // Thats why we return &Database as its a memory value.
 func NewDatabase() (*Database, error) {
 	// func Open(driverName, dataSourceName string) (*DB, error)
+	//db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	db, err := sql.Open("postgres", "postgresql://root:password@localhost:5432/go-chat?sslmode=disable")
 	if err != nil {
 		return nil, err

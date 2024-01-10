@@ -6,7 +6,7 @@ import { AuthContext } from '../modules/auth_provider'
 import { WebsocketContext } from '../modules/websocket_provider'
 import { useRouter } from 'next/router'
 
-const index = () => {
+const Index = () => {
   const [rooms, setRooms] = useState<{ id: string; name: string }[]>([])
   const [roomName, setRoomName] = useState('')
   const { user } = useContext(AuthContext)
@@ -114,4 +114,4 @@ const index = () => {
   )
 }
 
-export default index
+export default Index

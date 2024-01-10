@@ -13,7 +13,7 @@
 4- Create our Database
     - docker exec -it postgresChat createdb --username=root --owner=root go-chat
 5- Access Out postgresChat DB
-    - docker exec -it postgresChat psql
+    - docker exec -it postgresChat psql # database_name
 6- To make sure database is created type "\l" to list the databases, Then exit with "\q"
 7- Write db package
     - Import postgres driver "github.com/lib/pq", You can use "go get" command or "go mod tidy".

@@ -1,0 +1,37 @@
+services:
+  nextapp:
+    container_name: nextapp
+    image: nextapp:1.0.0
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://127.0.0.1:8080
+      - NEXT_PUBLIC_WEBSOCKET_URL=ws://127.0.0.1:8080
+    depends_on:
+      - goapp
+  goapp:
+    container_name: goapp
+    image: goapp:1.0.0
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://root:password@db:5432/go-chat?sslmode=disable
+      - FRONTEND_URL=http://127.0.0.1:3000 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  db:
+    container_name: db
+    image: postgres:15-alpine
+    # restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=go-chat
+    ports:
+      - 5432:5432
