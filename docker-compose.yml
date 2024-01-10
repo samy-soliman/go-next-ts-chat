@@ -8,8 +8,8 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://127.0.0.1:8080
-      - NEXT_PUBLIC_WEBSOCKET_URL=ws://127.0.0.1:8080
+      - NEXT_PUBLIC_API_URL=http://goapp:8080
+      - NEXT_PUBLIC_WEBSOCKET_URL=ws://goapp:8080
     depends_on:
       - goapp
   goapp:
@@ -20,7 +20,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - DATABASE_URL=postgresql://root:password@db:5432/go-chat?sslmode=disable
-      - FRONTEND_URL=http://127.0.0.1:3000 
+      - FRONTEND_URL=http://localhost:3000 
     ports:
       - "8080:8080"
     depends_on:

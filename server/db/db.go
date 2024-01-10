@@ -2,6 +2,8 @@ package db
 
 import (
 	"database/sql"
+	"os"
+
 	/*
 		In Go, a blank import statement is used when you want to import a package solely for its side-effects, without using any of its exported identifiers. It’s written as _ "package/path".
 		The underscore _ is known as the blank identifier. It’s a special identifier that you can use when you need to declare a variable that you won’t actually use.
@@ -24,8 +26,8 @@ type Database struct {
 // Thats why we return &Database as its a memory value.
 func NewDatabase() (*Database, error) {
 	// func Open(driverName, dataSourceName string) (*DB, error)
-	//db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
-	db, err := sql.Open("postgres", "postgresql://root:password@localhost:5432/go-chat?sslmode=disable")
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	//db, err := sql.Open("postgres", "postgresql://root:password@localhost:5432/go-chat?sslmode=disable")
 	if err != nil {
 		return nil, err
 	}
