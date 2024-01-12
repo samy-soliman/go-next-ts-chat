@@ -1,6 +1,6 @@
 # ![Realtime chat built with Go, Next, and Typescript](image.png)
 
-![Architecture](/Images/Architecture.png)
+![Architecture](/assets/Architecture.png)
 
 In this project we will build a **(Realtime)** chat built with **(Go)**, **(Next)**, **(tailwindcss)** ,  **(Typescript)** and **(PostgresSql)**.
 
@@ -53,8 +53,12 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
     # make sure you see users table created
 ```
 
+![Architecture](/assets/appScreanShot3.JPG)
+
     - Test by Postman
-    ![Architecture](/Images/1.PNG)
+
+![Architecture](/assets/appScreanShot3.JPG)
+
 ## Quick Run,  YAY!
 1. I have steps 1 to 6 covered to i will jump with deploying the app.
 
