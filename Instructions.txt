@@ -1,3 +1,4 @@
+# Steps to create the project manually
 BackEnd Steps:
 1- Pull postgres dockerhub image: docker pull postgres:15-alpine
 2- make our go app server module
