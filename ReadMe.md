@@ -1,8 +1,8 @@
 # ![Realtime chat built with Go, Next, and Typescript](image.png)
 
-![Architecture](/assets/Architecture.png)
+![screenshot](/assets/appScreanShot2.JPG)
 
-In this project we will build a **(Realtime)** chat built with **(Go)**, **(Next)**, **(tailwindcss)** ,  **(Typescript)** and **(PostgresSql)**.
+## In this project we will build a **(Realtime)** chat built with **(Go)**, **(Next)**, **(tailwindcss)** ,  **(Typescript)** and **(PostgresSql)**.
 
 ## Hub Architecture
 
@@ -45,38 +45,37 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 6. You can test the db is working either by entering inside the db container and access the db engine or by using the go api throw a http client like postman.
     - Test by container
 
-```Shell
-    # Enter to db container
-    docker exec -it db psql go-chat
-    # enter this to list db tables
-    \d
-    # make sure you see users table created
-```
+    ```Shell
+        # Enter to db container
+        docker exec -it db psql go-chat
+        # enter this to list db tables
+        \d
+        # make sure you see users table created
+    ```
 
-![Architecture](/assets/appScreanShot3.JPG)
+    ![screenshot](/assets/appScreanShot3.JPG)
 
     - Test by Postman
 
-![Architecture](/assets/appScreanShot3.JPG)
+    ![screenshot](/assets/appScreanShot4.JPG)
 
-## Quick Run,  YAY!
-1. I have steps 1 to 6 covered to i will jump with deploying the app.
+7. Now You are Ready to go 
 
-![Architecture](/Images/1.PNG)
+## Quick Run !
+1. Jump in to your browser and type http://localhost:3000 to enter NextJs app.
 
-2. Confirm our infrastructure is created inside gcp console
+![screenshot](/assets/appScreanShot5.JPG)
 
-3. Now i am going to ssh into my private vm.
+2. Enter some data to register
 
-![Architecture](/Images/2.PNG)
+3. Open up a seconed private browser windows to test the web socket.
 
-4. Now to clone the mongo and nodejs files, i have them in a diffrent repo so you can use it but do not forget to alter the images tags.
+4. Create a Room then join it using the two users.
 
-```Shell
-    git clone https://github.com/samy-soliman/nodejs-k8s.git
-```
-Notes:
-- Only the **Management VM (private)** will have access to internet through the **NAT**.
-- The **GKE cluster (private)** will NOT have access to the internet.
-- The **Management VM** will be used to manage the **GKE cluster** and **build/push** images to the **Artifact Registry**.
-- All deployed images must be stored in Artifact Registry.
+![screenshot](/assets/appScreanShot6.JPG)
+
+5. Start Chatting :D
+
+![screenshot](/assets/appScreanShot2.JPG)
+
+![screenshot](/assets/appScreanShot1.JPG)
