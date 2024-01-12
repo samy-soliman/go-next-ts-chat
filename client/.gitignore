@@ -26,7 +26,8 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env*.local
+# You should un comment this in a real project with credentials
+# .env*.local
 
 # vercel
 .vercel
