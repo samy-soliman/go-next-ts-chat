@@ -2,7 +2,6 @@ import React, { useState, useRef, useContext, useEffect } from 'react'
 import ChatBody from '../../components/chat_body'
 import { WebsocketContext } from '../../modules/websocket_provider'
 import { useRouter } from 'next/router'
-import { API_URL } from '../../constants'
 import autosize from 'autosize'
 import { AuthContext } from '../../modules/auth_provider'
 
@@ -32,7 +31,7 @@ const Index = () => {
     const roomId = conn.url.split('/')[5]
     async function getUsers() {
       try {
-        const res = await fetch(`${API_URL}/ws/getClients/${roomId}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ws/getClients/${roomId}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         })
@@ -44,7 +43,7 @@ const Index = () => {
       }
     }
     getUsers()
-  }, [])
+  }, [router]);
 
   useEffect(() => {
     if (textarea.current) {
@@ -76,7 +75,7 @@ const Index = () => {
     conn.onclose = () => {}
     conn.onerror = () => {}
     conn.onopen = () => {}
-  }, [textarea, messages, conn, users])
+  }, [textarea, messages, conn, users,router]);
 
   const sendMessage = () => {
     if (!textarea.current?.value) return

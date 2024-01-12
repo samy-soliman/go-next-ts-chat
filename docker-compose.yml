@@ -1,3 +1,9 @@
+version: '3'
+
+networks:
+  chatapp:
+    driver: bridge
+
 services:
   nextapp:
     container_name: nextapp
@@ -8,8 +14,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://goapp:8080
-      - NEXT_PUBLIC_WEBSOCKET_URL=ws://goapp:8080
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+      - NEXT_PUBLIC_WEBSOCKET_URL=ws://localhost:8080
+    networks:
+      - chatapp
+    #network_mode: "service:goapp"
     depends_on:
       - goapp
   goapp:
@@ -23,6 +32,8 @@ services:
       - FRONTEND_URL=http://localhost:3000 
     ports:
       - "8080:8080"
+    networks:
+      - chatapp
     depends_on:
       - db
   db:
@@ -35,3 +46,5 @@ services:
       - POSTGRES_DB=go-chat
     ports:
       - 5432:5432
+    networks:
+      - chatapp

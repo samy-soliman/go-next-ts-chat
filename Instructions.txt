@@ -1,3 +1,4 @@
+BackEnd Steps:
 1- Pull postgres dockerhub image: docker pull postgres:15-alpine
 2- make our go app server module
     - bash : mkdir server && cd server && go mod init server
@@ -25,22 +26,21 @@
 12- Apply the migrations
     - migrate -path db/migrations -database "postgresql://root:password@localhost:5432/go-chat?sslmode=disable" -verbose up
     - connect to postgres database engine then connect to our "go-chat" db using "\c go=chat", list tables using "\d", make sure "users" database is present.
-
-..- Init TypeScript project and tailwindcss 
+13- add the code of the project
+--------------------------------------------------
+Front-End Steps:
+1- Init TypeScript project and tailwindcss 
     - npx create-next-app@13.1.1 client --typescript --eslint
     - npm install -D tailwindcss postcss autoprefixer
     - npx tailwindcss init -p
-..- Remove next/font warning
+2- Remove next/font warning
     - npx @next/codemod built-in-next-font .
-..- Add uuid package
+3- Add uuid package
     - npm i uuid
     - remove hint error > npm i --save-dev @types/uuid
-..- Add autosize package
+4- Add autosize package
     - npm i autosize
     - Remove hint error > npm i --save-dev @types/autosize
-
-
-
+------------------------------------------------------
 KeyPoints:
 1- Package context defines the Context type, which carries deadlines, cancellation signals, and other request-scoped values across API boundaries and between processes.
-2- 

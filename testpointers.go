@@ -1,3 +1,5 @@
+// this is just me trying to learn more about pointers
+// it has nothing to do with the application
 package main
 
 import "fmt"
@@ -6,6 +8,7 @@ func main() {
 
 	var x int = 50
 	// var s string = "string"
+	// &x is a pointer :D
 	var y *int = &x // will not accept var s
 	var k *int = y
 	fmt.Println(y)  // 0xc00000a0b8

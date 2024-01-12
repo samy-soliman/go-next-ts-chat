@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from 'react'
-import { API_URL } from '../../constants'
 import { useRouter } from 'next/router'
 import { AuthContext, UserInfo } from '../../modules/auth_provider'
 
@@ -14,13 +13,13 @@ const Index = () => {
       router.push('/')
       return
     }
-  }, [authenticated])
+  }, [authenticated , router])
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     try {
-      const res = await fetch(`${API_URL}/login`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),

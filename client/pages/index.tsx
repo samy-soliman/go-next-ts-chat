@@ -1,7 +1,5 @@
 import { useState, useEffect, useContext } from 'react'
-import { API_URL } from '../constants'
 import { v4 as uuidv4 } from 'uuid'
-import { WEBSOCKET_URL } from '../constants'
 import { AuthContext } from '../modules/auth_provider'
 import { WebsocketContext } from '../modules/websocket_provider'
 import { useRouter } from 'next/router'
@@ -16,7 +14,7 @@ const Index = () => {
 
   const getRooms = async () => {
     try {
-      const res = await fetch(`${API_URL}/ws/getRooms`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ws/getRooms`, {
         method: 'GET',
       })
 
@@ -31,14 +29,14 @@ const Index = () => {
 
   useEffect(() => {
     getRooms()
-  }, [])
+  }, [router])
 
   const submitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault()
 
     try {
       setRoomName('')
-      const res = await fetch(`${API_URL}/ws/createRoom`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/ws/createRoom`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -58,7 +56,7 @@ const Index = () => {
 
   const joinRoom = (roomId: string) => {
     const ws = new WebSocket(
-      `${WEBSOCKET_URL}/ws/joinRoom/${roomId}?userId=${user.id}&username=${user.username}`
+      `${process.env.NEXT_PUBLIC_WEBSOCKET_URL}/ws/joinRoom/${roomId}?userId=${user.id}&username=${user.username}`
     )
     if (ws.OPEN) {
       setConn(ws)
