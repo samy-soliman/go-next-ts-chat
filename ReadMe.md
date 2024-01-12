@@ -1,4 +1,4 @@
-# ![Realtime chat built with Go, Next, and Typescript](/assets/appScreanShot2.JPG)
+# Realtime chat built with Go, Next, and Typescript
 
 ![screenshot](/assets/appScreanShot2.JPG)
 
