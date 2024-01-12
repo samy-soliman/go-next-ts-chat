@@ -1,8 +1,8 @@
-# ![Realtime chat built with Go, Next, and Typescript](image.png)
+# ![Realtime chat built with Go, Next, and Typescript](/assets/appScreanShot2.JPG)
 
 ![screenshot](/assets/appScreanShot2.JPG)
 
-## In this project we will build a **(Realtime)** chat built with **(Go)**, **(Next)**, **(tailwindcss)** ,  **(Typescript)** and **(PostgresSql)**.
+## In this project we will build a Realtime web socket chat built with Go,Next,  tailwindcss , Typescript and PostgresSql.
 
 ## Hub Architecture
 
