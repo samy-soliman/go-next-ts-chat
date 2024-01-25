@@ -1,0 +1,39 @@
+# nextapp deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextapp
+  template:
+    metadata:
+      labels:
+        app: nextapp
+    spec:
+      containers:
+      - name: nextapp
+        image: nextapp:1.0.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_API_URL
+          value: "http://goapp-service:80"
+        - name: NEXT_PUBLIC_WEBSOCKET_URL
+          value: "ws://goapp-service:80"
+---
+# nextapp service
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextapp-service
+spec:
+  selector:
+    app: nextapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+

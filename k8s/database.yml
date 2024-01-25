@@ -1,0 +1,64 @@
+#123456789DS@m
+# db deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: db
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: root
+        - name: POSTGRES_PASSWORD
+          value: password
+        - name: POSTGRES_DB
+          value: go-chat
+        volumeMounts:
+        - name: migration-scripts
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: migration-scripts
+        configMap:
+          name: migration-scripts
+
+---
+# db service
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  selector:
+    app: db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: migration-scripts
+data:
+  init.sql: |
+    CREATE TABLE "users" (
+    "id" bigserial PRIMARY KEY,
+    "username" varchar NOT NULL,
+    "email" varchar NOT NULL,
+    "password" varchar NOT NULL
+    );
+  seed.sql: |
+    INSERT INTO users(username, password, email) VALUES ('test','test','test@email.com');

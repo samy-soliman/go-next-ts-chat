@@ -1,0 +1,38 @@
+# goapp deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goapp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goapp
+  template:
+    metadata:
+      labels:
+        app: goapp
+    spec:
+      containers:
+      - name: goapp
+        image: goapp:1.0.0
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://root:password@db-service:5432/go-chat?sslmode=disable"
+        - name: FRONTEND_URL
+          value: "http://nextapp-service:80"
+---
+# goapp service
+apiVersion: v1
+kind: Service
+metadata:
+  name: goapp-service
+spec:
+  selector:
+    app: goapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
