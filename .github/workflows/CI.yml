@@ -27,7 +27,7 @@ jobs:
       with:
         context: ./client
         push: true
-        tags: frontend:${{ github.sha }}
+        tags: kubesami/frontend:${{ github.sha }}
     
     - name: Build and push backend
       id: docker_build_backend
@@ -35,5 +35,5 @@ jobs:
       with:
         context: ./server
         push: true
-        tags: backend:${{ github.sha }}
+        tags: kubesami/backend:${{ github.sha }}
   
