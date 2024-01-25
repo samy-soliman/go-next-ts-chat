@@ -33,7 +33,7 @@ jobs:
       id: docker_build_backend
       uses: docker/build-push-action@v2
       with:
-        context: ./client
+        context: ./server
         push: true
-        tags: frontend:${{ github.sha }}
+        tags: backend:${{ github.sha }}
   
