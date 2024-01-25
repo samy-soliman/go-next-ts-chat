@@ -35,5 +35,5 @@ jobs:
       with:
         context: ./server
         push: true
-        tags: kubesami/backend:${{ github.sha }}
+        tags: kubesami/backend:${{ github.sha }} 
   
