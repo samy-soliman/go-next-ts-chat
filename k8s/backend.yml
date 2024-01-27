@@ -22,7 +22,7 @@ spec:
         - name: DATABASE_URL
           value: "postgresql://root:password@db-service:5432/go-chat?sslmode=disable"
         - name: FRONTEND_URL
-          value: "http://nextapp-service:80"
+          value: "http://devopschat.xyz:80"
 ---
 # goapp service
 apiVersion: v1

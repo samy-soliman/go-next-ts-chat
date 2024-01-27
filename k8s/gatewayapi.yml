@@ -1,7 +1,7 @@
-apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1beta1
 metadata:
-  name: http
+  name: external-http
 spec:
   gatewayClassName: gke-l7-gxlb
   listeners:
@@ -9,6 +9,17 @@ spec:
     protocol: HTTP
     port: 80
 ---
-
-
-
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: chat
+spec:
+  parentRefs:
+  - kind: Gateway
+    name: external-http
+  hostnames:
+  - "devopschat.xyz"
+  rules:
+  - backendRefs:
+    - name: nextapp-service
+      port: 80
