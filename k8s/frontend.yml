@@ -15,14 +15,14 @@ spec:
     spec:
       containers:
       - name: nextapp
-        image: kubesami/frontend:75649495f353959f14dc3c63db838a5cd5ad9178
+        image: kubesami/frontend:8d12170ddaba9ca4dd88d20240ab2e53301b0fe3
         ports:
         - containerPort: 3000
         env:
         - name: NEXT_PUBLIC_API_URL
           value: "http://devopschat.xyz:80"
         - name: NEXT_PUBLIC_WEBSOCKET_URL
-          value: "ws://http://devopschat.xyz:80"
+          value: "ws://devopschat.xyz:80"
 ---
 # nextapp service
 apiVersion: v1

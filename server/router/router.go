@@ -2,7 +2,6 @@
 package router
 
 import (
-	"os"
 	"server/internal/user"
 	"server/internal/ws"
 	"time"
@@ -17,13 +16,15 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{os.Getenv("FRONTEND_URL")},
+		AllowOrigins: []string{"*"},
+		//AllowOrigins:     []string{os.Getenv("FRONTEND_URL")},
 		AllowMethods:     []string{"GET", "POST"},
 		AllowHeaders:     []string{"Content-Type"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			return origin == os.Getenv("FRONTEND_URL")
+			return true
+			//return origin == os.Getenv("FRONTEND_URL")
 		},
 		MaxAge: 12 * time.Hour,
 	}))

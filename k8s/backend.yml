@@ -15,14 +15,14 @@ spec:
     spec:
       containers:
       - name: goapp
-        image: kubesami/backend:75649495f353959f14dc3c63db838a5cd5ad9178
+        image: kubesami/backend:8d12170ddaba9ca4dd88d20240ab2e53301b0fe3
         ports:
         - containerPort: 8080
         env:
         - name: DATABASE_URL
           value: "postgresql://root:password@db-service:5432/go-chat?sslmode=disable"
         - name: FRONTEND_URL
-          value: "http://devopschat.xyz:80"
+          value: "http://devopschat.xyz"
 ---
 # goapp service
 apiVersion: v1
