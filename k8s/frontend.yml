@@ -20,9 +20,9 @@ spec:
         - containerPort: 3000
         env:
         - name: NEXT_PUBLIC_API_URL
-          value: "http://goapp-service:80"
+          value: "http://devopschat.xyz:80"
         - name: NEXT_PUBLIC_WEBSOCKET_URL
-          value: "ws://goapp-service:80"
+          value: "ws://http://devopschat.xyz:80"
 ---
 # nextapp service
 apiVersion: v1
