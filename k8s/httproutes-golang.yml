@@ -9,28 +9,6 @@ spec:
   hostnames:
   - "api.devopschat.xyz"
   rules:
-  - matches:
-    - path:
-        value: /signup
-    backendRefs:
-    - name: goapp-service
-      port: 8080
-  - matches:
-    - path:
-        value: /login
-    backendRefs:
-    - name: goapp-service
-      port: 8080
-  - matches:
-    - path:
-        value: /logout
-    backendRefs:
-    - name: goapp-service
-      port: 8080
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /ws
-    backendRefs:
+  - backendRefs:
     - name: goapp-service
       port: 8080
