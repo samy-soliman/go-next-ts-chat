@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: nextapp
-        image: kubesami/frontend:8d12170ddaba9ca4dd88d20240ab2e53301b0fe3
+        image: kubesami/frontend:a20f320eb7958e49ee6c8b77d7d7312f1f32d5e5
         ports:
         - containerPort: 3000
         env:
