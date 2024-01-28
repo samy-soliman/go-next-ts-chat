@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: goapp
-        image: kubesami/backend:a20f320eb7958e49ee6c8b77d7d7312f1f32d5e5
+        image: kubesami/backend:e4e4a97944fbb44121940ba828dc5f64cfa0bd86
         ports:
         - containerPort: 8080
         env:
