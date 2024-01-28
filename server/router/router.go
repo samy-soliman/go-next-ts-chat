@@ -15,15 +15,30 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
-		AllowHeaders:     []string{"Content-Type", "Authorization", "Origin"},
+
+		AllowAllOrigins: true,
+
+		//AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE", "HEAD"},
+		AllowHeaders:     []string{"Content-Type", "Authorization", "Origin", "Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
+		// Allows usage of popular browser extensions schemas
+		AllowBrowserExtensions: true,
+
+		// Allows usage of WebSocket protocol
+		AllowWebSockets: true,
+
+		// Allows usage of file:// schema (dangerous!) use it only when you 100% sure it's needed
+		AllowFiles: true,
+
+		// Allows to pass custom OPTIONS response status code for old browsers / clients
+		OptionsResponseStatusCode: 200,
+
+		/*AllowOriginFunc: func(origin string) bool {
 			return true
 			//return origin == os.Getenv("FRONTEND_URL")
-		},
+		},*/
 		//MaxAge: 12 * time.Hour,
 	}))
 
