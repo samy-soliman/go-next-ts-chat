@@ -2,7 +2,6 @@
 package router
 
 import (
-	"os"
 	"server/internal/user"
 	"server/internal/ws"
 	"time"
@@ -17,7 +16,7 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{os.Getenv("FRONTEND_URL"), "http://api.devopschat.xyz"},
+		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
 		AllowHeaders:     []string{"Content-Type", "Authorization"},
 		ExposeHeaders:    []string{"Content-Length"},
