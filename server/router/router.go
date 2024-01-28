@@ -2,37 +2,31 @@
 package router
 
 import (
-	//"os"
+	"os"
 	"server/internal/user"
 	"server/internal/ws"
+	"time"
 
-	//"time"
-
-	//"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 var r *gin.Engine
 
-func corsMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
-			return
-		}
-
-		c.Next()
-	}
-}
-
 func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
 
-	r.Use(corsMiddleware())
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{os.Getenv("FRONTEND_URL"), "http://api.devopschat.xyz"},
+		AllowMethods:     []string{"GET", "POST"},
+		AllowHeaders:     []string{"Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == os.Getenv("FRONTEND_URL")
+		},
+		MaxAge: 12 * time.Hour,
+	}))
 
 	r.POST("/signup", userHandler.CreateUser)
 	r.POST("/login", userHandler.Login)
