@@ -30,7 +30,7 @@ func CORSMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		if c.Request.Method == "POST" {
+		if c.Request.Method == "OPTIONS" {
 			for name, values := range c.Request.Header {
 				// Loop over all values for the name.
 				for _, value := range values {
