@@ -5,7 +5,6 @@ import (
 	"server/internal/user"
 	"server/internal/ws"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,33 +13,20 @@ var r *gin.Engine
 func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
 
-	r.Use(cors.New(cors.Config{
+	r.Use(func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, PATCH, DELETE, HEAD")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization, Origin, Access-Control-Allow-Origin, Access-Control-Allow-Headers")
+		c.Writer.Header().Set("Access-Control-Expose-Headers", "Content-Length")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 
-		AllowAllOrigins: true,
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(200)
+			return
+		}
 
-		//AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE", "HEAD"},
-		AllowHeaders:     []string{"Content-Type", "Authorization", "Origin", "Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
-		// Allows usage of popular browser extensions schemas
-		AllowBrowserExtensions: true,
-
-		// Allows usage of WebSocket protocol
-		AllowWebSockets: true,
-
-		// Allows usage of file:// schema (dangerous!) use it only when you 100% sure it's needed
-		AllowFiles: true,
-
-		// Allows to pass custom OPTIONS response status code for old browsers / clients
-		OptionsResponseStatusCode: 200,
-
-		/*AllowOriginFunc: func(origin string) bool {
-			return true
-			//return origin == os.Getenv("FRONTEND_URL")
-		},*/
-		//MaxAge: 12 * time.Hour,
-	}))
+		c.Next()
+	})
 
 	r.POST("/signup", userHandler.CreateUser)
 	r.POST("/login", userHandler.Login)
