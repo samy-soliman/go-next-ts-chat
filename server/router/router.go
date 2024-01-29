@@ -2,20 +2,51 @@
 package router
 
 import (
+	"fmt"
 	"server/internal/user"
 	"server/internal/ws"
-	"time"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 var r *gin.Engine
 
+func CORSMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		allowedOrigins := []string{"http://devopschat.xyz", "http://devopschat.xyz/"}
+		origin := c.Request.Header.Get("Origin")
+		for _, allowedOrigin := range allowedOrigins {
+			if origin == allowedOrigin {
+				c.Writer.Header().Set("Access-Control-Allow-Origin", allowedOrigin)
+				break
+			}
+		}
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		if c.Request.Method == "POST" {
+			for name, values := range c.Request.Header {
+				// Loop over all values for the name.
+				for _, value := range values {
+					fmt.Printf("Header field %q, Value %q\n", name, value)
+				}
+			}
+		}
+
+		c.Next()
+	}
+}
+
 func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
-
-	r.Use(cors.New(cors.Config{
+	r.Use(CORSMiddleware())
+	/*r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"http://devopschat.xyz"},
 		AllowMethods:     []string{"GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE", "HEAD"},
 		AllowHeaders:     []string{"Content-Type", "Authorization", "Origin", "Content-Type", "Access-Control-Allow-Origin", "Access-Control-Allow-Headers"},
@@ -36,7 +67,7 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 			return origin == "http://devopschat.xyz"
 		},
 		MaxAge: 12 * time.Hour,
-	}))
+	}))*/
 
 	r.POST("/signup", userHandler.CreateUser)
 	r.POST("/login", userHandler.Login)
