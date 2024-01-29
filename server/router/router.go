@@ -79,8 +79,8 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r.GET("/ws/getClients/:roomId", wsHandler.GetClients)
 
 	// Add the health check endpoint
-	r.GET("/health", HealthCheck())
-	//r.GET("/", HealthCheck())
+	//r.GET("/health", HealthCheck())
+	r.GET("/", HealthCheck())
 }
 
 func Start(addr string) error {
