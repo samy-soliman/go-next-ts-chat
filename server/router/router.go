@@ -29,9 +29,7 @@ var r *gin.Engine
 
 func HealthCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"status": "OK",
-		})
+		c.String(200, "OK")
 	}
 }
 
@@ -79,8 +77,8 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r.GET("/ws/getClients/:roomId", wsHandler.GetClients)
 
 	// Add the health check endpoint
-	//r.GET("/health", HealthCheck())
-	r.GET("/", HealthCheck())
+	r.GET("/health", HealthCheck())
+	//r.GET("/", HealthCheck())
 }
 
 func Start(addr string) error {
