@@ -3,17 +3,15 @@ package router
 
 import (
 	"fmt"
-	"log"
 	"server/internal/user"
 	"server/internal/ws"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 var r *gin.Engine
 
-func Logger() gin.HandlerFunc {
+/*func Logger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Start timer
 		t := time.Now()
@@ -26,6 +24,14 @@ func Logger() gin.HandlerFunc {
 
 		// Log request details
 		log.Printf("Request: %s %s, status: %d, latency: %s\n", c.Request.Method, c.Request.URL, c.Writer.Status(), latency)
+	}
+}*/
+
+func HealthCheck() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"status": "OK",
+		})
 	}
 }
 
@@ -60,7 +66,7 @@ func CORSMiddleware() gin.HandlerFunc {
 
 func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
-	r.Use(Logger())
+	//r.Use(Logger())
 	r.Use(CORSMiddleware())
 
 	r.POST("/signup", userHandler.CreateUser)
@@ -71,6 +77,9 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r.GET("/ws/joinRoom/:roomId", wsHandler.JoinRoom)
 	r.GET("/ws/getRooms", wsHandler.GetRooms)
 	r.GET("/ws/getClients/:roomId", wsHandler.GetClients)
+
+	// Add the health check endpoint
+	r.GET("/health", HealthCheck())
 }
 
 func Start(addr string) error {

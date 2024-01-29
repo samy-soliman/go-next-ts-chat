@@ -1,0 +1,26 @@
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: goapp-service-healthcheck
+spec:
+  default:
+    checkIntervalSec: 10
+    timeoutSec: 5
+    healthyThreshold: 2
+    unhealthyThreshold: 3
+    logConfig:
+      enabled: true
+    config:
+      type: HTTP
+      httpHealthCheck:
+        portSpecification: USE_NAMED_PORT
+        port: 8080
+        portName: http
+        host: "api.devopschat.xyz"
+        requestPath: "/health"
+        response: "OK"
+        proxyHeader: NONE
+  targetRef:
+    group: ""
+    kind: Service
+    name: goapp-service
