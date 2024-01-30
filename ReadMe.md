@@ -1,3 +1,5 @@
+[![Continuous Integration](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CI.yml/badge.svg?branch=main&event=push)](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CI.yml)
+
 # Realtime chat built with Go, Next, and Typescript
 
 ![screenshot](/assets/appScreanShot2.JPG)
