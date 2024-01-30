@@ -27,7 +27,7 @@ A room is initially empty. Only when a client hits the `/ws/joinRoom` endpoint, 
 
 Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads the message through the client's websocket connection and sends the message to the Broadcast channel in the hub, which will then broadcast the message out to every client in the same room. The `writeMessage` method in each of those clients will write the message to its websocket connection, which will be handled on the frontend side to display the messages accordingly.
 
-# How To Get the Project Working
+# Deployment - How To Get the Project Working
 
 ## Docker Compose
 1. Clone The Repo.
@@ -92,7 +92,7 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 ![screenshot](/assets/appScreanShot1.JPG)
 
 ## GitHub Actions
-1. We deploy our app to GCP so first wr have to make sure this API are enabled.
+1. We deploy our app to GCP so first we have to make sure this API are enabled.
     - Enable Cloud Domains API
     - Enable Cloud DNS API
     - Enable Compute Engine API
@@ -102,13 +102,6 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 4. First Register domain
 
 ![screenshot](/assets/CloudDomains.JPG)
-
-5. Lucky for as at this phase we already wrote our docker images in the first phase of deploying with docker compose.
-
-6. all you need is to clone the project and provide your own secrets in the github actions workflows and you are good to go.
-
-7. a point to consider is that we need to create the k8s for gatewayAPI first then take its generated IP and put it in our DNS records for the domain.
-
 
 5. Lucky for as at this phase we already wrote our docker images in the first phase of deploying with docker compose.
 
@@ -130,8 +123,16 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 
 ![screenshot](/assets/CI.JPG)
 
-2. CD workflow
+2. Not after out CI has run successfully our CD is triggerd but i have configured the **Environment** Production to require review before accessing so that makes a trigger for us to enable manually for the CD because we maybe does not want to go production with each commit.
+
+![screenshot](/assets/ProductionReview.JPG)
+
+3. Lets approve that review, this will trigger the CD pipeline
+
+![screenshot](/assets/ProductionReview2.JPG)
+
+4. CD workflow
 
 ![screenshot](/assets/CD.JPG)
 
-3. you should wait a little then open the domain and the website should be running.
+5. you should wait a little then open the domain and the website should be running.
