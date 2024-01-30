@@ -14,6 +14,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      # make sure to change the .ev.local file in the nextjs to match those
       - NEXT_PUBLIC_API_URL=http://localhost:8080
       - NEXT_PUBLIC_WEBSOCKET_URL=ws://localhost:8080
     networks:

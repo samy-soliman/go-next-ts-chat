@@ -1,4 +1,0 @@
-1. Enable Cloud Domains API
-2. Enable Cloud DNS API
-3. Enable Compute Engine API 
-4. Enable Kubernetes Engine API 

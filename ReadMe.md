@@ -1,25 +1,23 @@
 [![Continuous Integration](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CI.yml/badge.svg?branch=main&event=push)](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CI.yml)
-
 [![Continuous Deployment](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CD.yml/badge.svg?branch=main&event=push)](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CD.yml)
 
 # Realtime chat built with Go, Next, and Typescript
 
 ![screenshot](/assets/appScreanShot2.JPG)
 
-## In this project we will build a Realtime web socket chat built with Go,Next,  tailwindcss , Typescript and PostgresSql. We then deploy it using different methods:
+## In this project, we will build a Realtime web socket chat using Go, Next, Tailwind CSS, Typescript, and PostgreSQL. We then deploy it using different methods:
 1. Docker Compose file
-2. Automated Delivery to GKE using Github Actions CICD pipeline for building, testing, artifact saving and deployment of the project. I also configured a public domain using Kubernetes gatewayAPI. 
+2. Automated Delivery to GKE using Github Actions CICD pipeline for building, testing, artifact saving, and deployment of the project. I also configured a public domain using Kubernetes gatewayAPI. 
 
-## Development
+# Development
 
-In this sections we look at the development perspictive of the project, getting to know its architecture and 
-how it works, in simple words its a three tier app. the frontend is written in nextjs, backend with golang and the database with postgresql, it is a chat system where users can create diffrent chat rooms and join them for chatting.
+In this section, we look at the development perspective of the project, getting to know its architecture and how it works. In simple words, it's a three-tier app: the frontend is written in Next.js, the backend with Golang, and the database with PostgreSQL. It is a chat system where users can create different chat rooms and join them for chatting.
 
-# Hub Architecture
+## Hub Architecture
 
 ![Initial Hub Architecture](/assets/hub_initial.jpg)
 
-First, we have the hub running on a separate goroutine which is the central place that manages different channels and contains a map of rooms. The hub has a Register and an Unregister channel to register/unregister clients, and a Broadcast channel that receives a message and broadcasts it out to all the other clients in the same room.
+First, we have the hub running on a separate goroutine, which is the central place that manages different channels and contains a map of rooms. The hub has a Register and an Unregister channel to register/unregister clients, and a Broadcast channel that receives a message and broadcasts it out to all the other clients in the same room.
 
 ![Client joins room](/assets/join_room.jpg)
 
@@ -27,11 +25,11 @@ A room is initially empty. Only when a client hits the `/ws/joinRoom` endpoint, 
 
 ![Hub Architecture](/assets/hub_architecture.jpg)
 
-Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads the message through the client's websocket connection and send the message to the Broadcast channel in the hub, which will then broadcast the message out to every client in the same room. The `writeMessage` method in each of those clients will write the message to its websocket connection, which will be handled on the frontend side to display the messages accordingly.
+Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads the message through the client's websocket connection and sends the message to the Broadcast channel in the hub, which will then broadcast the message out to every client in the same room. The `writeMessage` method in each of those clients will write the message to its websocket connection, which will be handled on the frontend side to display the messages accordingly.
 
-## How To Get the Project Working
+# How To Get the Project Working
 
-# Docker Compose
+## Docker Compose
 1. Clone The Repo.
 
 ```Shell
@@ -74,7 +72,7 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 
 7. Now You are Ready to go 
 
-## Quick Run !
+### Quick Run - Docker Compose!
 1. Jump in to your browser and type http://localhost:3000 to enter NextJs app.
 
 ![screenshot](/assets/appScreanShot5.JPG)
@@ -93,3 +91,47 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 
 ![screenshot](/assets/appScreanShot1.JPG)
 
+## GitHub Actions
+1. We deploy our app to GCP so first wr have to make sure this API are enabled.
+    - Enable Cloud Domains API
+    - Enable Cloud DNS API
+    - Enable Compute Engine API
+    - Enable Kubernetes Engine API
+2. Make a GCP Service account to authenticate our GITHUB ACTIONS, Download json key and put it in a secrect in Production Environment, also make sure to substitute all the secrets with your own.
+3. I am going to use a Domain from GCP cloud Domains to use for our project you may choose not to so you to configure your own k8s files for you specific implementation.
+4. First Register domain
+
+![screenshot](/assets/CloudDomains.JPG)
+
+5. Lucky for as at this phase we already wrote our docker images in the first phase of deploying with docker compose.
+
+6. all you need is to clone the project and provide your own secrets in the github actions workflows and you are good to go.
+
+7. a point to consider is that we need to create the k8s for gatewayAPI first then take its generated IP and put it in our DNS records for the domain.
+
+
+5. Lucky for as at this phase we already wrote our docker images in the first phase of deploying with docker compose.
+
+6. all you need is to clone the project and provide your own secrets in the github actions workflows and you are good to go.
+
+7. a point to consider is that we need to create the k8s for gatewayAPI first then take its generated IP and put it in our DNS records for the domain.
+
+```Shell
+    # get gatewayAPI IP
+    kubectl get gateways
+```
+
+8. configure DNS records for domain.
+
+![screenshot](/assets/CloudDNS.JPG)
+
+### Quick Run - Github Actions !
+1. CI workflow
+
+![screenshot](/assets/CI.JPG)
+
+2. CD workflow
+
+![screenshot](/assets/CD.JPG)
+
+3. you should wait a little then open the domain and the website should be running.
