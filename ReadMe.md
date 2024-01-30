@@ -29,7 +29,7 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 
 # Deployment - How To Get the Project Working
 
-## Docker Compose
+## 1- Docker Compose
 1. Clone The Repo.
 
 ```Shell
@@ -90,8 +90,8 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 ![screenshot](/assets/appScreanShot2.JPG)
 
 ![screenshot](/assets/appScreanShot1.JPG)
-
-## GitHub Actions
+</br>
+## 2- GitHub Actions
 1. We deploy our app to GCP so first we have to make sure this API are enabled.
     - Enable Cloud Domains API
     - Enable Cloud DNS API
@@ -123,7 +123,7 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 
 ![screenshot](/assets/CI.JPG)
 
-2. Not after out CI has run successfully our CD is triggerd but i have configured the **Environment** Production to require review before accessing so that makes a trigger for us to enable manually for the CD because we maybe does not want to go production with each commit.
+2. Note after our CI has run successfully our CD is triggerd but i have configured the **Environment** Production to require review before accessing so that makes a trigger for us to enable manually for the CD because we maybe does not want to go production with each commit.
 
 ![screenshot](/assets/ProductionReview.JPG)
 
