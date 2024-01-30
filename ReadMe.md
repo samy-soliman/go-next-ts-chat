@@ -1,12 +1,21 @@
 [![Continuous Integration](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CI.yml/badge.svg?branch=main&event=push)](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CI.yml)
 
+[![Continuous Deployment](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CD.yml/badge.svg?branch=main&event=push)](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CD.yml)
+
 # Realtime chat built with Go, Next, and Typescript
 
 ![screenshot](/assets/appScreanShot2.JPG)
 
-## In this project we will build a Realtime web socket chat built with Go,Next,  tailwindcss , Typescript and PostgresSql.
+## In this project we will build a Realtime web socket chat built with Go,Next,  tailwindcss , Typescript and PostgresSql. We then deploy it using different methods:
+1. Docker Compose file
+2. Automated Delivery to GKE using Github Actions CICD pipeline for building, testing, artifact saving and deployment of the project. I also configured a public domain using Kubernetes gatewayAPI. 
 
-## Hub Architecture
+## Development
+
+In this sections we look at the development perspictive of the project, getting to know its architecture and 
+how it works, in simple words its a three tier app. the frontend is written in nextjs, backend with golang and the database with postgresql, it is a chat system where users can create diffrent chat rooms and join them for chatting.
+
+# Hub Architecture
 
 ![Initial Hub Architecture](/assets/hub_initial.jpg)
 
@@ -21,6 +30,8 @@ A room is initially empty. Only when a client hits the `/ws/joinRoom` endpoint, 
 Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads the message through the client's websocket connection and send the message to the Broadcast channel in the hub, which will then broadcast the message out to every client in the same room. The `writeMessage` method in each of those clients will write the message to its websocket connection, which will be handled on the frontend side to display the messages accordingly.
 
 ## How To Get the Project Working
+
+# Docker Compose
 1. Clone The Repo.
 
 ```Shell
@@ -81,3 +92,4 @@ Each client has a `writeMessage` and a `readMessage` method. `readMessage` reads
 ![screenshot](/assets/appScreanShot2.JPG)
 
 ![screenshot](/assets/appScreanShot1.JPG)
+
