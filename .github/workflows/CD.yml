@@ -1,0 +1,43 @@
+name: Continuous Deployment
+
+on:
+  workflow_run:
+    workflows: ["Continuous Integration"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    environment:
+      name: Production
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Replace image tags in Kubernetes manifests
+      run: |
+        sed -i 's|kubesami/backend:.*|kubesami/backend:${{ github.event.workflow_run.head_sha }}|g' ./k8s/backend.yml
+        sed -i 's|kubesami/frontend:.*|kubesami/frontend:${{ github.event.workflow_run.head_sha }}|g' ./k8s/frontend.yml
+    
+    - name: authorization of gcp
+      id: 'auth'
+      uses: 'google-github-actions/auth@v2'
+      with:
+        credentials_json: ${{ secrets.SA }} # Replace with the name of your GitHub Actions secret
+    
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v2.0.0'
+      with:
+        version: '>= 363.0.0'
+
+    - name: Deploy to GKE
+      id: deploy
+      run: |
+        gcloud container clusters get-credentials ${{ secrets.REPO_NAME }} --region ${{ secrets.REPO_REGION }} --project ${{ secrets.PROJECT_ID }}
+        kubectl apply -f ./k8s/
+
+        
