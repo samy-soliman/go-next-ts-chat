@@ -18,7 +18,7 @@
     - The frontend is written in Next.js, tailwind css.
     - The backend with Golang.
     - The database with PostgreSQL.
-- To know more about the development process of this app -> Development 
+- To know more about the development process of this app -> [Development](https://github.com/samy-soliman/go-next-ts-chat/blob/main/ReadME/Development.md)
 
 # Deployment - How To Get the Project Working
 
@@ -26,9 +26,17 @@
 In This part we:
 1. Use docker to containerize our **Nextjs** frontend, **Golang** backend and **Postgresql** database.
 2. Make a docker compose file to spin up the project at the click of a button.
-3. To see a run in action and To Learn how to get that working >> 
+3. To see a run in action and To Learn how to get that working >> [Docker Compose](https://github.com/samy-soliman/go-next-ts-chat/blob/main/ReadME/Docker-Compose.md)
 
 ## 2- GitHub Actions
+
+<div align="center">
+  
+![](https://github.com/samy-soliman/Q-learning_maze/blob/master/Qlearning.gif)
+
+
+</div>
+
 In This part we:
 1. Configure a domain and DNS server records for our app.
 2. Write Kubernetes manifets to our containerized app.
@@ -40,4 +48,4 @@ In This part we:
     - We implemented it using github actions **Environment** review option which gives us two features:
         - a trigger for our production deployment.
         - a review for the changes.
-6. To see a run in action and To Learn how to get that working >> 
+6. To see a run in action and To Learn how to get that working >> [Github Actions CICD](https://github.com/samy-soliman/go-next-ts-chat/blob/main/ReadME/GithubCICD.md)
