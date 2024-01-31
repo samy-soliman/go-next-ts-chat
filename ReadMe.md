@@ -32,7 +32,7 @@ In This part we:
 
 <div align="center">
   
-![](https://github.com/samy-soliman/Q-learning_maze/blob/master/Qlearning.gif)
+![](https://github.com/samy-soliman/go-next-ts-chat/blob/main/assets/GitHubCICD.gif)
 
 
 </div>
