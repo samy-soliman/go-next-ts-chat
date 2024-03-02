@@ -5,7 +5,7 @@
 
 ![screenshot](/assets/appScreanShot2.JPG)
 
-
+ 
 ## In this project, we will:
 1. Develop a Realtime web socket chat using Go, Next, Tailwind CSS, Typescript, and PostgreSQL.
 2. Deploy it using Docker Compose.
