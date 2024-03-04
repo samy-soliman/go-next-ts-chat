@@ -45,3 +45,17 @@ Front-End Steps:
 ------------------------------------------------------
 KeyPoints:
 1- Package context defines the Context type, which carries deadlines, cancellation signals, and other request-scoped values across API boundaries and between processes.
+2- When a struct in Go embeds another struct, the methods of the embedded struct become available as if they were methods of the embedding (or host) struct.
+This is one of the ways Go allows for code reuse and a form of polymorphism.
+3- based on point 2 -> if Struct1 and Struct2 have fields or methods with the same name, the ones in Struct1 will take precedence. If you need to access the shadowed field or method in Struct2,
+you can do so by explicitly accessing it through Struct2. For example, s1.Struct2.Method1().
+4- based on point number 2 if a struct holds another struct that implements an  interface then the first struct implements the interface also.
+5- In Go, pointers are used for several reasons:
+    a- Efficiency: When you have a large struct, it’s more efficient to pass around a pointer to that struct rather than the struct itself.
+    This is because passing a pointer only requires copying the pointer (which is just a memory address and thus small and fixed-size),
+    whereas passing the struct itself involves copying the entire struct, which can be large.
+    b- Mutability: In Go, function parameters are passed by value.
+    This means that if you pass a struct to a function and that function modifies the struct,
+    those modifications won’t be seen outside the function because the function is working on a copy of the struct.
+    But if you pass a pointer to a struct, then the function can modify the struct via the pointer,
+    and those modifications will be seen outside the function.

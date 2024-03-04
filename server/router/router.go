@@ -1,31 +1,52 @@
 // router
+
 package router
 
 import (
 	"fmt"
+	"sync"
+	"time"
+
 	"server/internal/user"
 	"server/internal/ws"
 
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
-var r *gin.Engine
+var (
+	r           *gin.Engine
+	activeUsers = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "active_users",
+		Help: "Number of active users",
+	})
+	oldActiveUsers = prometheus.NewGauge(prometheus.GaugeOpts{
+		Name: "old_active_users",
+		Help: "Old count of active users",
+	})
+	customRegistry   = prometheus.NewRegistry()
+	activeUsersCount float64    // New variable to keep the count
+	mu               sync.Mutex // Mutex to protect the count variable
+)
 
-/*func Logger() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		// Start timer
-		t := time.Now()
-
-		// Process request
-		c.Next()
-
-		// Calculate latency
-		latency := time.Since(t)
-
-		// Log request details
-		log.Printf("Request: %s %s, status: %d, latency: %s\n", c.Request.Method, c.Request.URL, c.Writer.Status(), latency)
+func refreshCounterEveryTenSeconds() {
+	ticker := time.NewTicker(10 * time.Second)
+	for {
+		<-ticker.C
+		mu.Lock()
+		oldActiveUsers.Set(activeUsersCount)
+		activeUsersCount = 0
+		activeUsers.Set(0)
+		mu.Unlock()
 	}
-}*/
+}
+
+func init() {
+	customRegistry.MustRegister(activeUsers)
+	customRegistry.MustRegister(oldActiveUsers)
+	go refreshCounterEveryTenSeconds()
+}
 
 func HealthCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -62,10 +83,28 @@ func CORSMiddleware() gin.HandlerFunc {
 	}
 }
 
+func prometheusActiveUsersMetric() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Exclude /metrics endpoint
+		if c.Request.URL.Path != "/metrics" {
+			mu.Lock()
+			activeUsersCount++
+			activeUsers.Inc()
+			mu.Unlock()
+
+			c.Next()
+		} else {
+			c.Next()
+		}
+	}
+}
+
 func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r = gin.Default()
 	//r.Use(Logger())
 	r.Use(CORSMiddleware())
+
+	r.Use(prometheusActiveUsersMetric())
 
 	r.POST("/signup", userHandler.CreateUser)
 	r.POST("/login", userHandler.Login)
@@ -79,11 +118,31 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	// Add the health check endpoint
 	r.GET("/health", HealthCheck())
 	r.GET("/", HealthCheck())
+
+	// prometheus
+	r.GET("/metrics", gin.WrapH(promhttp.HandlerFor(customRegistry, promhttp.HandlerOpts{})))
 }
 
 func Start(addr string) error {
 	return r.Run(addr)
 }
+
+// code samples
+/*func Logger() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// Start timer
+		t := time.Now()
+
+		// Process request
+		c.Next()
+
+		// Calculate latency
+		latency := time.Since(t)
+
+		// Log request details
+		log.Printf("Request: %s %s, status: %d, latency: %s\n", c.Request.Method, c.Request.URL, c.Writer.Status(), latency)
+	}
+}*/
 
 /*r.Use(cors.New(cors.Config{
 	AllowOrigins:     []string{"http://devopschat.xyz"},
