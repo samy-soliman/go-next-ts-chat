@@ -2,16 +2,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: prometheus
+  name: grafana
   namespace: monitoring
   labels:
     project: chat
 spec:
   endpoints:
   - honorLabels: true
-  # matches endpoint prometheus-operated port
-    port: web
+    port: ui
   selector:
     matchLabels:
-     # matches endpoint prometheus-operated label
-      operated-prometheus: "true"
+      app: grafana
