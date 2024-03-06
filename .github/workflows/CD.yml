@@ -43,18 +43,18 @@ jobs:
     - name: Deploy promettheus Operator CRD
       id: deploy
       run: |
-        kubectl create -f ./k8s/prometheus-operator-crd/
+        kubectl apply -f ./k8s/prometheus-operator-crd/
 
     - name: Deploy Prometheus Operator Controller
       id: deploy2
       run: |
-        kubectl create -f ./k8s/prometheus-operator/
+        kubectl apply -f ./k8s/prometheus-operator/
 
   
     - name: Deploy Prometheus deployment
       id: deploy3
       run: |
-        kubectl create -f ./k8s/prometheus/
+        kubectl apply -f ./k8s/prometheus/
 
 
         
