@@ -20,8 +20,8 @@ jobs:
     
     - name: Replace image tags in Kubernetes manifests
       run: |
-        sed -i 's|kubesami/backend:.*|kubesami/backend:${{ github.event.workflow_run.head_sha }}|g' ./k8s/backend.yml
-        sed -i 's|kubesami/frontend:.*|kubesami/frontend:${{ github.event.workflow_run.head_sha }}|g' ./k8s/frontend.yml
+        sed -i 's|kubesami/backend:.*|kubesami/backend:${{ github.event.workflow_run.head_sha }}|g' ./k8s/Application/backend.yml
+        sed -i 's|kubesami/frontend:.*|kubesami/frontend:${{ github.event.workflow_run.head_sha }}|g' ./k8s/Application//frontend.yml
     
     - name: authorization of gcp
       id: 'auth'
@@ -40,9 +40,21 @@ jobs:
         cluster_name: ${{ secrets.CLUSTER_NAME }}
         location: ${{ secrets.REPO_REGION }}
 
-    - name: Deploy to GKE
+    - name: Deploy promettheus Operator CRD
       id: deploy
       run: |
-        kubectl create -f ./k8s/Application/
+        kubectl create -f ./k8s/prometheus-operator-crd/
+
+    - name: Deploy Prometheus Operator Controller
+      id: deploy2
+      run: |
+        kubectl create -f ./k8s/prometheus-operator/
+
+  
+    - name: Deploy Prometheus deployment
+      id: deploy3
+      run: |
+        kubectl create -f ./k8s/prometheus/
+
 
         

@@ -1,0 +1,42 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: main
+  namespace: monitoring
+spec:
+  version: v2.40.1
+  alerting:
+    alertmanagers:
+    - namespace: monitoring
+      name: alertmanager-operated
+      port: web
+  serviceMonitorSelector:
+    matchLabels:
+      project: chat
+  ruleSelector:
+    matchLabels:
+      project: chat
+  serviceAccountName: prometheus
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  enableAdminAPI: false
+  storage:
+    volumeClaimTemplate:
+      spec:
+        # storageClassName: gp2
+        resources:
+          requests:
+            storage: 20Gi
+  securityContext:
+    fsGroup: 0
+    runAsNonRoot: false
+    runAsUser: 0
+  replicas: 1
+  retention: 7d
+  scrapeInterval: 30s
