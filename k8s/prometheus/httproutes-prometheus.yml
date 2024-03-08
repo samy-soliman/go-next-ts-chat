@@ -1,0 +1,15 @@
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1beta1
+metadata:
+  name: chat-nextjs
+spec:
+  parentRefs:
+  - kind: Gateway
+    name: external-http
+    namespace: your-other-namespace  # Specify the target namespace here
+  hostnames:
+  - "devopschat.xyz"
+  rules:
+  - backendRefs:
+    - name: nextapp-service
+      port: 80

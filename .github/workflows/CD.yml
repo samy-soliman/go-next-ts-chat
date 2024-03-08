@@ -59,6 +59,11 @@ jobs:
       id: deploy4
       run: |
         kubectl apply -f ./k8s/grafana/
+    
+    - name: Deploy Grafana deployment
+      id: deploy5
+      run: |
+        kubectl apply -f ./k8s/Application/
 
 
         

@@ -12,4 +12,6 @@ spec:
     port: ui
   selector:
     matchLabels:
+      # match service label
+      # kubectl describe endpoints grafana -n monitoring
       app: grafana

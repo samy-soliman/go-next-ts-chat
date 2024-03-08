@@ -1,3 +1,5 @@
 # Ignore generated kubeconfig from google-github-actions/get-gke-credentials
 gha-kubeconfig-*
 database-notes*
+# if you are going to put your password make sure to make the file private or do not push it to the repo
+/k8s/alert-manager
