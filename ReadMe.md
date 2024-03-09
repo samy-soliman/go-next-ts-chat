@@ -1,5 +1,5 @@
 [![Continuous Integration](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CI.yml/badge.svg?branch=main&event=push)](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CI.yml)
-[![Continuous Deployment](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CD.yml/badge.svg?branch=main&event=push)](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CD.yml)
+[![Continuous Deployment](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CD.yml/badge.svg?branch=main)](https://github.com/samy-soliman/go-next-ts-chat/actions/workflows/CD.yml)
 
 # Realtime chat built with Go, Next, and Typescript
 

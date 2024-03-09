@@ -48,22 +48,33 @@ jobs:
     - name: Deploy Prometheus Operator Controller
       id: deploy2
       run: |
-        kubectl apply -f ./k8s/prometheus-operator/
+        kubectl apply -f ./k8s/prometheus-operator/namespace.yaml
+        kubectl apply -f ./k8s/prometheus-operator/prometheus/
+
+    - name: Deploy cAdvisor 
+      id: deploy5
+      run: |
+        kubectl apply -f ./k8s/cAdvisor/
+
+    - name: Deploy kube-state-metric 
+      id: deploy6
+      run: |
+        kubectl apply -f ./k8s/kube-state-metric/
+
+    - name: Deploy Application deployment
+      id: deploy7
+      run: |
+        kubectl apply -f ./k8s/Application/
 
     - name: Deploy Prometheus deployment
       id: deploy3
       run: |
         kubectl apply -f ./k8s/prometheus/
-      
+    
     - name: Deploy Grafana deployment
       id: deploy4
       run: |
         kubectl apply -f ./k8s/grafana/
-    
-    - name: Deploy Application deployment
-      id: deploy5
-      run: |
-        kubectl apply -f ./k8s/Application/
 
 
         
