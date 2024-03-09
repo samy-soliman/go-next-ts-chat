@@ -14,6 +14,7 @@ spec:
   serviceMonitorSelector:
     matchLabels:
       project: chat
+  # empty selector for cross namespace, null for this namespace only
   serviceMonitorNamespaceSelector: {}
   ruleSelector:
     matchLabels:

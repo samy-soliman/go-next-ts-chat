@@ -119,7 +119,7 @@ func InitRouter(userHandler *user.Handler, wsHandler *ws.Handler) {
 	r.GET("/health", HealthCheck())
 	r.GET("/", HealthCheck())
 
-	// prometheus
+	// prometheus metrics
 	r.GET("/metrics", gin.WrapH(promhttp.HandlerFor(customRegistry, promhttp.HandlerOpts{})))
 }
 
