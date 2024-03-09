@@ -76,6 +76,4 @@ jobs:
       id: deploy4
       run: |
         kubectl apply -f ./k8s/grafana/
-
-
         
