@@ -54,7 +54,8 @@ jobs:
     - name: Deploy cAdvisor 
       id: deploy5
       run: |
-        kubectl apply -f ./k8s/cAdvisor/
+        kubectl apply -f ./k8s/cAdvisor/namespace.yaml
+        kubectl apply -f ./k8s/cAdvisor/Advisor/
 
     - name: Deploy kube-state-metric 
       id: deploy6
