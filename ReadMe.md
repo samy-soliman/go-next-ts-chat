@@ -10,6 +10,7 @@
 1. Develop a Realtime web socket chat using Go, Next, Tailwind CSS, Typescript, and PostgreSQL.
 2. Deploy it using Docker Compose.
 3. Deploy it using Continuous Delivery to GKE using Github Actions.
+4. Monitoring setup using Prometheus. Then, visualize the metrics using Grafana, and finally, set up alerting notifications via email.
 
 # Development
 
@@ -49,3 +50,21 @@ In This part we:
         - a trigger for our production deployment.
         - a review for the changes.
 6. To see a run in action and To Learn how to get that working &#8594; [Github Actions CICD](https://github.com/samy-soliman/go-next-ts-chat/blob/main/ReadME/GithubCICD.md)
+
+
+# Monitoring - How To make sure the Project is Working
+
+<div align="center">
+  
+![](https://github.com/samy-soliman/go-next-ts-chat/blob/main/assets/monitoring.gif)
+
+
+</div>
+
+In This part we:
+1. Monitor our application performance using the Golang Prometheus client.
+2. Monitor container performance using cAdvisor, and nodes using kube-state-metrics.
+3. set up alerting notifications via email.
+4. finally, Visualize the metrics using Grafana.
+
+
