@@ -1,0 +1,23 @@
+# [START cloudbuild]
+steps:
+# This step runs the unit tests on the app
+- id: 'tf init'
+  name: 'hashicorp/terraform:latest'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |
+      terraform init
+
+# [START tf-apply]
+- id: 'tf apply'
+  name: 'hashicorp/terraform:latest'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - |       
+      terraform destroy -auto-approve -var-file=dev.tfvars
+# [END tf-apply]
+options:
+  logging: CLOUD_LOGGING_ONLY
+# [END cloudbuild-trigger-cd]

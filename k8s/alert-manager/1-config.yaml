@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  # ConfigSecret is the name of a Kubernetes Secret in the same namespace as the Alertmanager object,
+  # which contains the configuration for this Alertmanager instance.
+  # If empty, it defaults to alertmanager-<alertmanager-name>.
+  name: alertmanager-demo
+  namespace: monitoring
+type: Opaque
+stringData:
+  alertmanager.yaml: |-
+    global:
+      smtp_smarthost: smtp.gmail.com:587
+      smtp_hello: localhost
+      smtp_from: ""
+      smtp_auth_username: ""
+      smtp_auth_password: ""
+      smtp_require_tls: true
+    route:
+      group_by:
+        - cluster
+        - alertname
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: email-notifications
+      routes:
+        - receiver: email-notifications
+          match:
+            severity: warning
+    receivers:
+    - name: email-notifications
+      email_configs:
+        - to: ''
+          headers:
+            Subject: 'Alert: {{ .GroupLabels.alertname }}'
+          text: '{{ range .Alerts }}{{ .Annotations.message }}\n{{ end }}'
+
